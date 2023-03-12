@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>전체 게시글 목록</title>
+  <style>
+    .list table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    .list table th, .list table td {
+      border:solid 1px #000;
+    }
+
+  </style>
+</head>
+<body>
+  <div th:replace="layout.html :: fragment-body-menu"></div>
+
+  <div class="list">
+
+    <div class="search-form">
+      <p class="total-count">전체 <span th:text="${totalCount}"></span>개</p>
+
+      <form method="get">
+        <select name="searchType">
+          <option value="all">전체</option>
+          <option th:selected="${#strings.equals(param.searchType, 'title')}" value="title">제목</option>
+          <option th:selected="${#strings.equals(param.searchType, 'userName')}" value="userName">작성자</option>
+          <option th:selected="${#strings.equals(param.searchType, 'contents')}" value="contents">내용</option>
+        </select>
+        <input th:value="${param.searchValue}" type="sear" name="searchValue" placeholder="검색어 입력"/>
+        <button type="submit">검색</button>
+      </form>
+    </div>
+
+    <table>
+      <thead>
+      <tr>
+        <th> NO </th>
+        <th>
+          게시글 제목
+        </th>
+
+        <th>
+          작성자
+        </th>
+
+        <th>
+          작성일시
+        </th>
+
+      </tr>
+      </thead>
+      <tbody id="dataLIst">
+      <tr th:each="x : ${list}">
+        <td th:text="${x.seq}">1</td>
+        <td>
+          <p>
+            <a th:href="'detail/' + ${x.postId}" th:text="${x.title}"> 게시글 제목 </a>
+          </p>
+        </td>
+        <td>
+          <p th:text="${x.userName}">작성자</p>
+        </td>
+        <td>
+          <p th:text="${x.postedAt}">2021.01.01</p>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+
+
+    <div class="pager" th:utext="${pager}">
+    </div>
+  </div>
+
+
+</body>
+</html>

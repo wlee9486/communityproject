@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zerobase.community_.post.mapper.PostMapper">
+
+  <sql id="selectListWhere">
+    <if test="searchType != null and searchValue != null">
+      <choose>
+        <when test="searchType == 'title'">
+          and title like concat('%', #{searchValue}, '%')
+        </when>
+        <when test="searchType == 'userName'">
+          and user_name like concat('%', #{searchValue}, '%')
+        </when>
+        <when test="searchType == 'contents'">
+          and contents like concat('%', #{searchValue}, '%')
+        </when>
+        <otherwise>
+          and
+          (
+          title like concat('%', #{searchValue}, '%')
+          or
+          user_name like concat('%', #{searchValue}, '%')
+          or
+          contents like concat('%', #{searchValue}, '%')
+          )
+        </otherwise>
+      </choose>
+    </if>
+  </sql>
+
+    <select id="selectListCount" resultType="long">
+      select count(*)
+      from post
+      where 1 = 1
+        <include refid="selectListWhere"/>
+    </select>
+
+    <select id="selectList" resultType="com.zerobase.community_.post.dto.PostDto">
+      select *
+      from post
+      where 1 = 1
+      <include refid="selectListWhere"/>
+      order by post_id desc
+      limit #{pageStart}, #{pageEnd}
+    </select>
+</mapper>

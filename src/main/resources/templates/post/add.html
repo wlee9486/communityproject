@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title> 게시글 작성 </title>
+    <style>
+        .detail table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .detail table th, .detail table td {
+            border:solid 1px #000;
+        }
+
+        .buttons {
+            margin-top: 20px;
+            text-align: center;
+        }
+        .buttons a, .buttons button {
+            border-width: 0;
+            background-color: transparent;
+            text-decoration: underline;
+            font-size: 14px;
+            line-height: 20px;
+            height: 20px;
+            color: #000;
+            cursor: pointer;
+        }
+    </style>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+            integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+            crossorigin="anonymous"></script>
+    <script>
+        $(document).ready(function() {
+            $('#submitForm').on('submit', function() {
+                oEditors.getById["contents"].exec("UPDATE_CONTENTS_FIELD", []);
+            });
+        });
+    </script>
+</head>
+<body>
+<div th:replace="layout.html :: fragment-admin-body-menu"></div>
+
+<h1> 게시글 작성 </h1>
+
+<div class="detail">
+
+    <form id="submitForm" method="post" enctype="multipart/form-data">
+
+        <table>
+            <tbody>
+            <tr>
+                <th> 제목 </th>
+                <td>
+                    <input type="text" name="title" required placeholder="제목 입력"/>
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    내용
+                </th>
+                <td>
+                    <textarea id="contents" name="contents" placeholder="내용 입력"></textarea>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+        <div class="buttons">
+            <button type="submit"> 게시물 등록</button>
+            <a href="/post/list"> 목록 이동 </a>
+        </div>
+
+    </form>
+</div>
+
+
+<script type="text/javascript" src="/res/se2/js/service/HuskyEZCreator.js" charset="utf-8"></script>
+<script type="text/javascript">
+
+    var oEditors = [];
+
+    setTimeout(function() {
+
+        nhn.husky.EZCreator.createInIFrame({
+            oAppRef: oEditors,
+            elPlaceHolder: "contents",
+            sSkinURI: "/res/se2/SmartEditor2Skin.html",
+            fCreator: "createSEditor2"
+        });
+
+
+    }, 100);
+
+</script>
+</body>
+</html>
