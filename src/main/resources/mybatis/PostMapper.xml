@@ -13,9 +13,6 @@
         <when test="searchType == 'userName'">
           and user_name like concat('%', #{searchValue}, '%')
         </when>
-        <when test="searchType == 'contents'">
-          and contents like concat('%', #{searchValue}, '%')
-        </when>
         <otherwise>
           and
           (

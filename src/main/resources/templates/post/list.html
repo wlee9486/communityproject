@@ -27,7 +27,6 @@
           <option value="all">전체</option>
           <option th:selected="${#strings.equals(param.searchType, 'title')}" value="title">제목</option>
           <option th:selected="${#strings.equals(param.searchType, 'userName')}" value="userName">작성자</option>
-          <option th:selected="${#strings.equals(param.searchType, 'contents')}" value="contents">내용</option>
         </select>
         <input th:value="${param.searchValue}" type="sear" name="searchValue" placeholder="검색어 입력"/>
         <button type="submit">검색</button>
